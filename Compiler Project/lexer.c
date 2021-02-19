@@ -88,7 +88,6 @@ tokenInfo getNextToken(FILE *fp){
 						case '\n': lno++;break;
 						case ' ':  state =1; break;
 						case '\t': state = 1; break;
-						case '#': state = 3; break;
 						case '`':
 								if(flag_multi == 0) 
 								{
@@ -122,8 +121,7 @@ tokenInfo getNextToken(FILE *fp){
 						case '+': tk.type = ADD; tk.lexeme[cnt_lexeme++] = ch; tk.lexeme[cnt_lexeme++] ='\0' ; strcpy(tk.name,"ADD"); return tk;
 						case '-': tk.type = SUB; tk.lexeme[cnt_lexeme++] = ch; tk.lexeme[cnt_lexeme++] ='\0' ; strcpy(tk.name,"SUB"); return tk;
 						case '*': tk.type = MUL; tk.lexeme[cnt_lexeme++] = ch; tk.lexeme[cnt_lexeme++] ='\0' ; strcpy(tk.name,"MUL"); return tk;
-						//case '/': tk.lexeme[cnt_lexeme++] = ch; state=2;break;
-						case '/': tk.type = DIV; tk.lexeme[cnt_lexeme++] = ch; tk.lexeme[cnt_lexeme++] ='\0' ; strcpy(tk.name,"DIV"); return tk;
+						case '/': tk.lexeme[cnt_lexeme++] = ch; state=2;break;
 						case '%': tk.type = MOD; tk.lexeme[cnt_lexeme++] = ch; tk.lexeme[cnt_lexeme++] ='\0' ; strcpy(tk.name,"MOD"); return tk;
 						case '\0': tk.type = EOF1; tk.lexeme[cnt_lexeme++] = ch; tk.lexeme[cnt_lexeme++] ='\0'; strcpy(tk.name,"EOF");return tk;
 
@@ -132,21 +130,6 @@ tokenInfo getNextToken(FILE *fp){
 					}
 					break;
 
-				case 2:
-						switch(ch){
-							case '/':
-								state=3;
-								cnt_lexeme--;
-								break;
-							default:
-									current_pos--;
-									tk.type =DIV;
-									tk.lexeme[cnt_lexeme] ='\0' ;
-									strcpy(tk.name,"DIV"); 
-									state=1;
-									return tk;
-						}
-						break;
 
 				case 101:                                   //To check Multiline Comment
 						while(flag_multi == 1)
@@ -166,22 +149,38 @@ tokenInfo getNextToken(FILE *fp){
 						}
 						break;
 
+				case 2:
+						switch(ch){
+							case '/':
+								state=3;
+								cnt_lexeme--;
+								break;
+							default:
+									current_pos--;
+									tk.type =DIV;
+									tk.lexeme[cnt_lexeme] ='\0' ;
+									strcpy(tk.name,"DIV"); 
+									state=1;
+									return tk;
+						}
+						break;
+
 				case 3: // /
-				switch(ch){
-				    case '*':
-                    case '#': state = 3; break; // //
-					case '\n': lno++; state = 1; break; //tk.type = COMMENT; strcpy(tk.name,"COMMENT") ;tk.lexeme[cnt_lexeme++] ='\0'; return tk;
-					case '\0':  break;// error
-					default : state = 3; break;
-				}
-				break;
+						switch(ch){
+							case '*':
+							case '#': state = 3; break; // //
+							case '\n': lno++; state = 1; break; //tk.type = COMMENT; strcpy(tk.name,"COMMENT") ;tk.lexeme[cnt_lexeme++] ='\0'; return tk;
+							case '\0':  break;// error
+							default : state = 3; break;
+						}
+						break;
 
 				case 4: // =
-					switch(ch){
-						case '=': tk.type = EQ; tk.lexeme[cnt_lexeme++] = ch; tk.lexeme[cnt_lexeme++] ='\0' ; strcpy(tk.name,"EQ"); return tk;
-						default : current_pos--; tk.type = ASSIGNOP; tk.lexeme[cnt_lexeme] ='\0' ; strcpy(tk.name,"ASSIGNOP"); return tk;
-					}
-					break;
+						switch(ch){
+							case '=': tk.type = EQ; tk.lexeme[cnt_lexeme++] = ch; tk.lexeme[cnt_lexeme++] ='\0' ; strcpy(tk.name,"EQ"); return tk;
+							default : current_pos--; tk.type = ASSIGNOP; tk.lexeme[cnt_lexeme] ='\0' ; strcpy(tk.name,"ASSIGNOP"); return tk;
+						}
+						break;
 
 				case 5: // .
 					switch(ch){
