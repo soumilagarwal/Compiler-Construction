@@ -286,7 +286,13 @@ tokenInfo getNextToken(FILE *fp){
 				case 51: //current_pos--;
 					 printf("\nLine No.%d: Lexical Error: Empty String\n",tk.lno); tk.type=ERROR; return tk;
 				case 52:
+					switch(ch){
+					case '"':
+					case '\n':
+					case '\r':
 					 printf("\nLine No.%d: Lexical Error: String contains invalid character\n",tk.lno); tk.type=ERROR; return tk;
+					 } 
+					break;
 				case 53:
 					printf("\nLine No.%d: Lexical Error: String '%s' exceeds the maximum length of 20\n",tk.lno,tk.lexeme); tk.type=ERROR; return tk; //maybe add \0 in lexeme
 
