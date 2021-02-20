@@ -272,6 +272,37 @@ tokenInfo getNextToken(FILE *fp){
 				case 10: // "
 					switch(ch){
 						case 'a' ... 'z':
+                        case 'A' ... 'Z':
+                        case '0' ... '9':
+                        case '~':
+                        case '`':
+                        case '!':
+						case '@':
+						case '#':
+						case '$':
+						case '%':
+						case '^':
+						case '&':
+						case '*':
+						case '(':
+						case ')':
+						case '-':
+						case '_':
+						case '+':
+                        case '=':
+						case '{':
+                        case '[':
+						case '}':
+                        case ']':
+                        case '|':
+                        case ';':
+                        case ':':
+                        case '<':
+                        case ',':
+                        case '>':
+                        case '.':
+                        case '?':
+                        case '/':
 						case ' ': tk.lexeme[cnt_lexeme++] = ch; state=39; break;
 						case '"': state = 51; break;  //"" length=2, no string
 						default : current_pos--; state = 52; break;

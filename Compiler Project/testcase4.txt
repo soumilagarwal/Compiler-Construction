@@ -16,3 +16,4 @@
 	string s;
 	s = "number";
 	a = "#$%$number";
+	b = "#$number\n";
