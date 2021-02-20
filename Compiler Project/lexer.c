@@ -345,7 +345,7 @@ tokenInfo getNextToken(FILE *fp){
 						case ' ': tk.lexeme[cnt_lexeme++] = ch;  state=39; break;
 						case '"':{
 							tk.lexeme[cnt_lexeme++] = ch; tk.lexeme[cnt_lexeme++] ='\0' ;
-							if (cnt_lexeme<=21){
+							if (cnt_lexeme<=100){
 								tk.type = STR; strcpy(tk.name,"STR"); return tk;
 							}
 							else{
@@ -366,7 +366,7 @@ tokenInfo getNextToken(FILE *fp){
 					 }
 					break;
 				case 53:
-					printf("\nLine No.%d: Lexical Error: String '%s' exceeds the maximum length of 20\n",tk.lno,tk.lexeme); tk.type=ERROR; return tk;
+					printf("\nLine No.%d: Lexical Error: String '%s' exceeds the maximum length of 100\n",tk.lno,tk.lexeme); tk.type=ERROR; return tk;
 
 
 				case 11:  //IDENTIFIER

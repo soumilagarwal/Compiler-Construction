@@ -1,14 +1,27 @@
-int n1, n2;
-    
-	n1 = 30;
-	n2 = 40;
+// Program to check test case 1
 
-    while(n1!=n2)
+int main()
+{
+    string s = "%dhellow";
+    float a = #;
+    b = -4.12;
+    c = 0.0625;
+    recursion();
+}
+
+int recursion()
+{
+    recursion();
+}
+
+{
+    string s = "This is empty block";
+    int a,b;
+    a = a + b / c;
+    if(a>b)
     {
-        if(n1 > n2)
-            n1 -= n2;
-        else
-            n2 -= n1;
+        while(c>d)
+        s = "Hey";
+        a = a+1;
     }
-    gcd = n1;
-
+}
