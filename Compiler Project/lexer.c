@@ -133,7 +133,8 @@ tokenInfo getNextToken(FILE *fp){
 						case '.': tk.lexeme[cnt_lexeme++] = ch; state = 5; break;
 						case '<': tk.lexeme[cnt_lexeme++] = ch; state = 6; break;
 						case '>': tk.lexeme[cnt_lexeme++] = ch; state = 7; break;
-						case '0' ... '9': tk.lexeme[cnt_lexeme++] = ch; state = 8; break;
+						case '0': tk.lexeme[cnt_lexeme++] = ch; state = 9; break;
+						case '1' ... '9': tk.lexeme[cnt_lexeme++] = ch; state = 8; break;
 						//case '_': tk.lexeme[cnt_lexeme++] = ch; state = 9; break;
 						case '"': tk.lexeme[cnt_lexeme++] = ch; state = 10; break;
 						case 'A' ... 'Z':
@@ -236,13 +237,20 @@ tokenInfo getNextToken(FILE *fp){
 					}
 					break;
 
-				case 8: // 0...9 (number)
+				case 8: // 1...9 (number)
 					switch(ch){
 						case '0' ... '9': tk.lexeme[cnt_lexeme++] = ch;  state = 8; break;
 						case '.': tk.lexeme[cnt_lexeme++] = ch;  state = 32; break;
 						default : current_pos--; tk.type = INT_NUM; tk.lexeme[cnt_lexeme] ='\0' ; strcpy(tk.name,"INT_NUM"); return tk;
 					}
 					break;
+				case 9: // 0 (number)
+				switch(ch){
+						case '.': tk.lexeme[cnt_lexeme++] = ch;  state = 32; break;
+						default : current_pos--; tk.type = INT_NUM; tk.lexeme[cnt_lexeme] ='\0' ; strcpy(tk.name,"INT_NUM"); return tk;
+					}
+					break;
+
 				case 32: //FLOAT a.
 					switch(ch){
 						case '0' ... '9': tk.lexeme[cnt_lexeme++] = ch;  state = 33; break;
