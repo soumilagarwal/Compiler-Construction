@@ -1,0 +1,14 @@
+<stmt> -> <declarativeStmt> | <conditionalStmt> SEMICOLON.
+<declarativeStmt> -> <type-specifier> <variable_list> SEMICOLON .
+<type-specifier> -> KEYWORD_INT | KEYWORD_STRING | KEYWORD_FLOAT .
+<variable_list> -> IDENTIFIER <more_ids> .
+<more_ids> -> COMMA <variable_list> | EPSILON .
+<conditionalStmt> -> KEYWORD_IF PARENTHESES_OPEN <booleanExpression> PARENTHESES_CLOSED <stmt> <otherStmts> <elseStmt> .
+<elseStmt> -> KEYWORD_ELSE <stmt> <otherStmts> SEMICOLON |  EPSILON .
+<otherStmts> -> <stmt> <otherStmts> | EPSILON .
+<booleanExpression> -> PARENTHESES_OPEN <booleanExpression> PARENTHESES_CLOSED <logicalOperator> PARENTHESES_OPEN <booleanExpression> PARENTHESES_CLOSED | NOT PARENTHESES_OPEN <booleanExpression> PARENTHESES_CLOSED | <constrainedVars> <relationalOp> <constrainedVars> .
+<logicalOperators> -> AND | OR .
+<constrainedVars> -> IDENTIFIER | INT_NUM | FLOAT .
+<relationalOp> -> LT | LE | EQ | GT | GE | NE .
+<operator> -> ADD | SUB | MUL | DIV | MOD . 
+<var> -> IDENTIFIER | INT_NUM | FLOAT | STR .

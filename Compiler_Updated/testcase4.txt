@@ -1,0 +1,19 @@
+	String s = "abc";
+
+	`hello
+	 my name is
+	 cddcjdcjncdnjndcs`
+	
+	//also ensure that your lexer ignores comments and white spaces properly
+	a = a          + 20;
+	a = abc +cde ;
+
+	
+
+	a = w1+200.23;
+
+	//ID PLUS RNUM SEMICOLON
+	string s;
+	s = "number";
+	a = "#$%$number";
+	b = "#$number\n";
