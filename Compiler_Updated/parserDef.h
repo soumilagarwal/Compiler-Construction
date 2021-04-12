@@ -16,9 +16,9 @@
 
 char buffer[BUFFER_SIZE];
 //char* terminals[NO_OF_TERMINALS];
-bool** firstMatrix;
-bool** followMatrix;
-bool** synchMatrix;
+int** firstMatrix;
+int** followMatrix;
+int** synchMatrix;
 
 typedef struct grammarnode{
 	int type;  //type =1 for non terminal, type=0 for terminal, type=2 for |, type=3 for epsilon // can also use enum in place of int type
