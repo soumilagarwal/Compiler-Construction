@@ -20,7 +20,8 @@ int main(int argc, char *argv[])
 	  initialiseKeywordHash();
 	  //initialise_Hash();
 	  initHashtable();
-	  createGrammar("grammar.txt");
+	  //createGrammar("grammar.txt");
+	  createGrammar("grammar_assign.txt");
 	  initialisefirstandfollowMatrix();
 	  
 	  findFirstSet();

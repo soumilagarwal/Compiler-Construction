@@ -214,7 +214,7 @@ Find if name is present in HashTable
 */
 hashtable* present(char* name){
 	int hashvalue = hash2(name);
-	printf("Hash Value in present = %d\n", hashvalue);
+	printf("\nHash Value in present = %d\n", hashvalue);
 	if(HashTable[hashvalue]==NULL){
 		printf("Hash doesnt exist\n");
 		return NULL;
@@ -827,7 +827,7 @@ parsetree parseInputSourceCode(char *testcaseFile, GrammarNode** parsetable, int
 			printf("entered in bigger if line 825\n");
 			printf("NT on top %s\n",gn->name);
 			hashNode = present(gn->name);
-			printf("Entered in line 827\n");
+			printf("Entered in line 830\n");
 			for(i=0;i<NO_OF_TERMINALS;i++){
 				if(strcmp(tk.name,terminals[i])==0) break;
 			}
