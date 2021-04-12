@@ -840,7 +840,7 @@ parsetree parseInputSourceCode(char *testcaseFile, GrammarNode** parsetable, int
 			printf("Line 831P i = %d\n", i);
 			
 			GrammarNode newnode = (GrammarNode) malloc(sizeof(GrammarNode));
-			printf("%d\n",parsetable[hashNode->ruleNo][0]->type);
+			//printf("%d\n",parsetable[hashNode->ruleNo][i]->type);
 			newnode= parsetable[hashNode->ruleNo][i];
 			printf("Entered line 832\n");
 			if(newnode==NULL){
