@@ -7,7 +7,6 @@ Rohit Lodha
 #include <malloc.h>
 #include <string.h>
 #include <stdbool.h>
-
 #include "lexer.h"
 
 int lineno = 1;

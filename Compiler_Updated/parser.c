@@ -5,7 +5,6 @@
 #include <stdbool.h>
 #include "parser.h"
 #include "lexer.h"
-
 //char buffer[BUFFER_SIZE];
 int nopt = 0;
 int pterror=0;
@@ -569,6 +568,7 @@ void printParseTable(){
 		}
 	}
 }
+}
 
 /*
 create stack
@@ -1016,40 +1016,37 @@ void printParseTree(parsetree PT)// , FILE* fp)
 /*
 print a tree at a time in file 
 */
-void printToFile(parsetree tr,FILE *fp)
-{
+void printToFile(parsetree tr,FILE *fp){
+	
 	//printf("Tree %s\n",tr->tk.name);
-    if((tr->ruleNode)->type==0)
-        {
-            //printf("%15s",tr->tk.lexeme);
-            //printf("%7d",tr->tk.lineno);
-            //printf("%15s",tr->tk.name);
-            fprintf(fp,"%15s",tr->tk.lexeme);
-            fprintf(fp,"%7d",tr->tk.lineno);
-            fprintf(fp,"%15s",tr->tk.name);
-        }
-	else
-        {
-            //printf("      ---------");
-            //printf("%7d",0);
-            //printf("%s"," --------------");
-            fprintf(fp,"      ---------");
-            fprintf(fp,"%7d",0);
-            fprintf(fp,"%s"," --------------");
-        }
-    if((tr->ruleNode)->type==0)
-    {
-        if(strcmp(tr->tk.name,"INT_NUM")==0){
-        	//printf("%9d",atoi(tr->tk.lexeme));
-        	fprintf(fp,"%9d",atoi(tr->tk.lexeme));
+    if((tr->ruleNode)->type==0){
+		//printf("%15s",tr->tk.lexeme);
+		//printf("%7d",tr->tk.lineno);
+		//printf("%15s",tr->tk.name);
+		fprintf(fp,"%15s",tr->tk.lexeme);
+		fprintf(fp,"%7d",tr->tk.lineno);
+		fprintf(fp,"%15s",tr->tk.name);
+    }
+	else{
+		//printf("      ---------");
+		//printf("%7d",0);
+		//printf("%s"," --------------");
+		fprintf(fp,"      ---------");
+		fprintf(fp,"%7d",0);
+		fprintf(fp,"%s"," --------------");
+    }
+    if((tr->ruleNode)->type==0){
+		if(strcmp(tr->tk.name,"INT_NUM")==0){
+			//printf("%9d",atoi(tr->tk.lexeme));
+			fprintf(fp,"%9d",atoi(tr->tk.lexeme));
 		}
-        else if(strcmp(tr->tk.name,"FLOAT")==0){
-        	//printf("%9f",atof(tr->tk.lexeme));
-        	fprintf(fp,"%9f",atof(tr->tk.lexeme));
+		else if(strcmp(tr->tk.name,"FLOAT")==0){
+			//printf("%9f",atof(tr->tk.lexeme));
+			fprintf(fp,"%9f",atof(tr->tk.lexeme));
 		}
-        else {
-        	//printf("%9s","----");
-        	fprintf(fp,"%9s","----");
+		else {
+			//printf("%9s","----");
+			fprintf(fp,"%9s","----");
 		}
     }
 	else {
