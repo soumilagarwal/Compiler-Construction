@@ -214,11 +214,14 @@ Find if name is present in HashTable
 */
 hashtable* present(char* name){
 	int hashvalue = hash2(name);
+	printf("Hash Value in present = %d\n", hashvalue);
 	if(HashTable[hashvalue]==NULL){
+		printf("Hash doesnt exist\n");
 		return NULL;
 	}
 	else{
 		hashtable* temp = HashTable[hashvalue];
+		printf("String Value in prsent %s\n", temp->name);
 		while(temp->next!=NULL && strcmp(temp->name,name)!=0){
 			temp=temp->next;
 		}
@@ -257,9 +260,11 @@ void findFirst(char* name){ //,int parent,int* eps) //parent give rule no NT
 		while(temp!=NULL){
 			//printf("In While\n");
 			if(temp->type==2){
+				printf("type - 2\n");
 				temp=temp->next;
 			}
 			else if(temp->type==3){
+				printf("type - 2\n");
 				firstMatrix[hashNode->ruleNo][NO_OF_TERMINALS-1] = 1;
 			}
 			else{
@@ -413,15 +418,15 @@ Find first set of all the non terminals of the grammar
 void findFirstSet(){
 	int i,j;
 	for(i=0;i<NO_OF_RULES;i++){
-		//printf("Finding first set for %s\n",grammar[i]->head->name);
+		printf("\n	Finding first set for %s\n",grammar[i]->head->name);
 		findFirst(grammar[i]->head->name);
-		// printf("First Set of %s\n",grammar[i]->head->name);
-		// for(j=0;j<NO_OF_TERMINALS;j++){
-		// 	if (firstMatrix[i][j]==1){
-		// 		printf("%s, ", terminals[j]);
-		// 	}
-		// }
-		// printf("\n");
+		printf("\nFirst Set of %s\n",grammar[i]->head->name);
+		for(j=0;j<NO_OF_TERMINALS;j++){
+		 	if (firstMatrix[i][j]==1){
+		 		printf("%s, ", terminals[j]);
+			 }
+		}
+		 printf("\n");
 	}
 }
 
@@ -431,14 +436,15 @@ Find follow set of all the non terminals of the grammar
 void findFollowSet(){ //Don't print EPSILON
 	int i,j;
 	for(i=0;i<NO_OF_RULES;i++){
+		printf("\n	Finding follow set for %s\n",grammar[i]->head->name);
 		findfollow(grammar[i]->head->name);
-		// printf("Follow Set of %s\n",grammar[i]->head->name);
-		// for(j=0;j<NO_OF_TERMINALS;j++){
-		// 	if (followMatrix[i][j]==1){
-		// 		printf("%s, ", terminals[j]);
-		// 	}
-		// }
-		// printf("\n");
+		printf("\nFollow Set of %s\n",grammar[i]->head->name);
+		for(j=0;j<NO_OF_TERMINALS;j++){
+			if (followMatrix[i][j]==1){
+				printf("%s, ", terminals[j]);
+			}
+		}
+		printf("\n");
 	}
 }
 
@@ -801,12 +807,14 @@ parsetree parseInputSourceCode(char *testcaseFile, GrammarNode** parsetable, int
 	tokenInfo tk = getNextToken(fp,0);
 	tokenInfo tk2;
 	GrammarNode gn;
-	hashtable* hashNode;
+	hashtable* hashNode = (hashtable*)malloc(sizeof(hashtable));
 	int error = 0;
 	int i;
 	int prevlineno;
+	//int k=0;
 	//printf("Going in parseInputWhile");
 	while(tk.type!=EOF1){
+		printf("entered in line 815\n");
 		//printf("%s--%s found\n",tk.name,tk.lexeme);
 		if (tk.type==ERROR){
 			tk = getNextToken(fp,0);
@@ -816,13 +824,27 @@ parsetree parseInputSourceCode(char *testcaseFile, GrammarNode** parsetable, int
 		gn = top(&st);
 		//printf("on top %s\n",gn->name);
 		if(gn->type==1){ // 
-			//printf("NT on top %s\n",gn->name);
+			printf("entered in bigger if line 825\n");
+			printf("NT on top %s\n",gn->name);
 			hashNode = present(gn->name);
+			printf("Entered in line 827\n");
 			for(i=0;i<NO_OF_TERMINALS;i++){
 				if(strcmp(tk.name,terminals[i])==0) break;
 			}
-			GrammarNode newnode= parsetable[hashNode->ruleNo][i];
+			if(hashNode == NULL){
+				printf("NULL returned\n");
+				tk = getNextToken(fp,0);
+				continue;
+			}
+			printf("%d\n",hashNode->ruleNo);
+			printf("Line 831P i = %d\n", i);
+			
+			GrammarNode newnode = (GrammarNode) malloc(sizeof(GrammarNode));
+			printf("%d\n",parsetable[hashNode->ruleNo][0]->type);
+			newnode= parsetable[hashNode->ruleNo][i];
+			printf("Entered line 832\n");
 			if(newnode==NULL){
+				printf("Entered in line 833\n");
 				char expectedTk[100];
 				expectedToken(gn->name,expectedTk);
 				//printf("%s expected Token\n",gn->name);

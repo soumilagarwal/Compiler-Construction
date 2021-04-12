@@ -22,7 +22,9 @@ int main(int argc, char *argv[])
 	  initHashtable();
 	  createGrammar("grammar.txt");
 	  initialisefirstandfollowMatrix();
+	  
 	  findFirstSet();
+	  printf("Hey\n");
 	  findFollowSet();
 	  initParseTable();
 	  createParseTable();
