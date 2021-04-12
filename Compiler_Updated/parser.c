@@ -450,7 +450,7 @@ void initParseTable(){
 	parsetable = (GrammarNode**)malloc(sizeof(GrammarNode*)*NO_OF_RULES);
 	int i,j;
 	for (i=0;i<NO_OF_RULES;i++){
-		parsetable[i] = (GrammarNode)malloc(sizeof(grammarnode)*(NO_OF_TERMINALS));
+		parsetable[i] = (GrammarNode*)malloc(sizeof(grammarnode)*(NO_OF_TERMINALS));
 		for(j=0;j<NO_OF_TERMINALS;j++){
 			parsetable[i][j]=NULL;
 		}
