@@ -822,7 +822,7 @@ parsetree parseInputSourceCode(char *testcaseFile, GrammarNode** parsetable, int
 	//int k=0;
 	//printf("Going in parseInputWhile");
 	while(tk.type!=EOF1){
-		printf("entered in line 815\n");
+		//printf("entered in line 815\n");
 		//printf("%s--%s found\n",tk.name,tk.lexeme);
 		if (tk.type==ERROR){
 			tk = getNextToken(fp,0);
@@ -830,10 +830,10 @@ parsetree parseInputSourceCode(char *testcaseFile, GrammarNode** parsetable, int
 		}
 		gn = top(&st);
 		if(gn->type==1){ // 
-			printf("entered in bigger if line 825\n");
-			printf("NT on top %s\n",gn->name);
+			//printf("entered in bigger if line 825\n");
+			//printf("NT on top %s\n",gn->name);
 			hashNode = present(gn->name);
-			printf("Entered in line 827\n");
+			//printf("Entered in line 827\n");
 			for(i=0;i<NO_OF_TERMINALS;i++){
 				if(strcmp(tk.name,terminals[i])==0) break;
 			}
@@ -849,9 +849,9 @@ parsetree parseInputSourceCode(char *testcaseFile, GrammarNode** parsetable, int
 			
 			GrammarNode newnode = newnode= parsetable[hashNode->ruleNo][i];
 			//printf("%d\n",parsetable[hashNode->ruleNo][0]->type);
-			printf("Entered line 832\n");
+			//printf("Entered line 832\n");
 			if(newnode==NULL){
-				printf("Entered in line 833\n");
+				//printf("Entered in line 833\n");
 				char expectedTk[100];
 				expectedToken(gn->name,expectedTk);
 				//printf("%s expected Token\n",gn->name);

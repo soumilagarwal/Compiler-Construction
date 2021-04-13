@@ -1,5 +1,8 @@
 int x;
 x = ( 5 + 7 );
-if ( a == 6){
-int z;
-}
+y = 7;
+if ( n1 > n2 ) ( 
+    int x;
+    x = 5;
+)
+//Hey
