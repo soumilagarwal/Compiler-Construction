@@ -366,16 +366,16 @@ void findfollow(char* name){
 						}
 					}
 					else if(temp->next!=NULL && temp->next->type!=2) {
-						printf("%s-->" ,temp->name);
+						//printf("%s-->" ,temp->name);
 						 hashtable* hashNode2;
 						 hashNode2 = present(temp->next->name);
 						 if (hashNode2==NULL){
 						 	int flag = 0;
 						 	int j=0;
-						 	printf("Found term in mext-%s\n",temp->next->name);
+						 	//printf("Found term in mext-%s\n",temp->next->name);
 						 	for (j=0;j<NO_OF_TERMINALS;j++){
 						 		if (strcmp(temp->next->name,terminals[j])==0){
-						 		//	printf("Next matched with %s",terminals[j]);
+						 			//printf("\nNext matched with %s",terminals[j]);
 						 			followMatrix[hashNode->ruleNo][j]=1;
 						 			flag=1;
 						 			break;
@@ -384,7 +384,7 @@ void findfollow(char* name){
 						 	if (flag==0) printf("Error at line : 384, Unrecognized token while creating FollowSet\n");
 						 }
 						 else{
-						 //	printf("GOing for First -%s\n",temp->next->name);
+						 	//printf("GOing for First -%s\n",temp->next->name);
 						 	findFirst(temp->next->name);
 						 	int j=0;
 							for (j=0;j<NO_OF_TERMINALS;j++){
@@ -440,16 +440,19 @@ Find follow set of all the non terminals of the grammar
 */
 void findFollowSet(){ //Don't print EPSILON
 	int i,j;
+	printf("-----------------------------\n");
+	printf("Printing Follow set \n");
+	printf("-----------------------------\n");
 	for(i=0;i<NO_OF_RULES;i++){
 		//printf("\n	Finding follow set for %s\n",grammar[i]->head->name);
 		findfollow(grammar[i]->head->name);
-		// printf("\nFollow Set of %s\n",grammar[i]->head->name);
-		// for(j=0;j<NO_OF_TERMINALS;j++){
-		// 	if (followMatrix[i][j]==1){
-		// 		printf("%s, ", terminals[j]);
-		// 	}
-		// }
-		// printf("\n");
+		printf("%s  : ",grammar[i]->head->name);
+		for(j=0;j<NO_OF_TERMINALS;j++){
+		if (followMatrix[i][j]==1){
+		 		printf("%s, ", terminals[j]);
+		 	}
+		 }
+		 printf("\n");
 	}
 }
 
