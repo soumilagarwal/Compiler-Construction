@@ -16,5 +16,3 @@
 <relationalOp> -> LT | LE | EQ | GT | GE | NE .
 <logicalOperators> -> AND | OR .
 <recurStmt> -> KEYWORD_WHILE PARENTHESES_OPEN <booleanExpression> PARENTHESES_CLOSED PARENTHESES_OPEN <stmt> PARENTHESES_CLOSED .
-
-
