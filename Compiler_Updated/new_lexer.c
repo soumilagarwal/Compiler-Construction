@@ -1,13 +1,9 @@
-/*
-Rohit Lodha
-2015A7PS0040P
-*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>
 #include <string.h>
 #include <stdbool.h>
-#include "lexer.h"
+#include "Header/lexer.h"
 
 int lineno = 1;
 int currentpos=0;

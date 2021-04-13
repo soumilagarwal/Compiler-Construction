@@ -3,8 +3,8 @@
 #include <malloc.h>
 #include <string.h>
 #include <stdbool.h>
-#include "parser.h"
-#include "lexer.h"
+#include "Header/parser.h"
+#include "Header/lexer.h"
 //char buffer[BUFFER_SIZE];
 int nopt = 0;
 int pterror=0;

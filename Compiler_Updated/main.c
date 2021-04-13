@@ -5,8 +5,8 @@
 *            Anuj Kharbanda
 */
 
-#include "lexer.h"
-#include "parser.h"
+#include "Header/lexer.h"
+#include "Header/parser.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 	  initialiseKeywordHash();
 	  //initialise_Hash();
 	  initHashtable();
-	  createGrammar("grammar.txt");
+	  createGrammar("Grammar/grammar.txt");
 	  initialisefirstandfollowMatrix();
 	  
 	  findFirstSet();
