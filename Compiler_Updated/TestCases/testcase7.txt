@@ -10,4 +10,8 @@ else
     int a;
     a = 5;
 )
+while ( n1 > n2 ) ( 
+    int x;
+    x = 5;
+)
 //Hey

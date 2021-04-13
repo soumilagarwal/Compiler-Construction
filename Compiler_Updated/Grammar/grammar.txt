@@ -1,4 +1,4 @@
-<stmt> -> <declarativeStmt> <stmt> | <assignmentStmt> <stmt> | <conditionalStmt> <stmt> | EPSILON .
+<stmt> -> <declarativeStmt> <stmt> | <assignmentStmt> <stmt> | <conditionalStmt> <stmt> | <recurStmt> <stmt> | EPSILON .
 <assignmentStmt> -> <lhs> ASSIGNOP <rhs> SEMICOLON .
 <lhs> -> IDENTIFIER .
 <operator> -> ADD | SUB | DIV | MUL | MOD . 
@@ -15,5 +15,6 @@
 <var> -> IDENTIFIER | INT_NUM | FLOAT | STR .
 <relationalOp> -> LT | LE | EQ | GT | GE | NE .
 <logicalOperators> -> AND | OR .
+<recurStmt> -> KEYWORD_WHILE PARENTHESES_OPEN <booleanExpression> PARENTHESES_CLOSED PARENTHESES_OPEN <stmt> PARENTHESES_CLOSED .
 
 

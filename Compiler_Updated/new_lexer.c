@@ -16,8 +16,8 @@ void initialiseLexer(){
 	buffersize = -1;
 }
 
-char *keywords1[] = {"int", "float", "boolean", "string", "if", "else" /*"while", "true", "false"*/, "return"};
-char *keywords2[] = {"KEYWORD_INT", "KEYWORD_FLOAT", "KEYWORD_BOOLEAN", "KEYWORD_STRING", "KEYWORD_IF", "KEYWORD_ELSE", /*"KEYOWRD_WHILE", "KEYWORD_TRUE", "KEYWORD_FALSE", */"KEYWORD_RETURN"};
+char *keywords1[] = {"int", "float", "boolean", "string", "if", "else", "while"/* "true", "false"*/, "return"};
+char *keywords2[] = {"KEYWORD_INT", "KEYWORD_FLOAT", "KEYWORD_BOOLEAN", "KEYWORD_STRING", "KEYWORD_IF", "KEYWORD_ELSE", "KEYWORD_WHILE",/*, "KEYWORD_TRUE", "KEYWORD_FALSE", */"KEYWORD_RETURN"};
 
 
 
@@ -57,6 +57,7 @@ int isKeyword(tokenInfo tk,char* name){
 	if (strcmp(keywords1[KeywordHashTable[a]],tk.lexeme)==0) {
 		strcpy(name,keywords2[KeywordHashTable[a]]);
 		//printf("Returning %d\n",KeywordHashTable[a]);
+		// printf("%s %d\n",tk.lexeme,KeywordHashTable[a]);
 		return KeywordHashTable[a];
 	}
 	else return -1;

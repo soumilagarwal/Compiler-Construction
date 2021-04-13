@@ -10,7 +10,7 @@
 #include "lexerDefine.h"
 #define NO_OF_RULES 17
 #define hashtablesize 100 
-#define NO_OF_TERMINALS 29
+#define NO_OF_TERMINALS 30
 #define NO_OF_NONTERMINALS 17
 #define BUFFER_SIZE 200
 
