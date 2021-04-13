@@ -8,10 +8,10 @@
 #include <stdbool.h>
 
 #include "lexerDefine.h"
-#define NO_OF_RULES 16
+#define NO_OF_RULES 17
 #define hashtablesize 100 
 #define NO_OF_TERMINALS 29
-#define NO_OF_NONTERMINALS 16
+#define NO_OF_NONTERMINALS 17
 #define BUFFER_SIZE 200
 
 char buffer[BUFFER_SIZE];

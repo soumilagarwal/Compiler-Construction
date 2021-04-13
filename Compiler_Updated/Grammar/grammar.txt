@@ -9,7 +9,8 @@
 <type-specifier> -> KEYWORD_INT | KEYWORD_STRING | KEYWORD_FLOAT .
 <variable_list> -> IDENTIFIER <more_ids> .
 <more_ids> -> COMMA IDENTIFIER <more_ids> | EPSILON .
-<conditionalStmt> -> KEYWORD_IF PARENTHESES_OPEN <booleanExpression> PARENTHESES_CLOSED PARENTHESES_OPEN <stmt> PARENTHESES_CLOSED . 
+<conditionalStmt> -> KEYWORD_IF PARENTHESES_OPEN <booleanExpression> PARENTHESES_CLOSED PARENTHESES_OPEN <stmt> PARENTHESES_CLOSED <conditionalContd> . 
+<conditionalContd> -> KEYWORD_ELSE PARENTHESES_OPEN <stmt> PARENTHESES_CLOSED | EPSILON .
 <booleanExpression> -> <constrainedVars> <relationalOp> <constrainedVars> .
 <var> -> IDENTIFIER | INT_NUM | FLOAT | STR .
 <relationalOp> -> LT | LE | EQ | GT | GE | NE .

@@ -5,4 +5,9 @@ if ( n1 > n2 ) (
     int x;
     x = 5;
 )
+else
+(
+    int a;
+    a = 5;
+)
 //Hey
