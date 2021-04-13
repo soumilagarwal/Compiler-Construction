@@ -27,12 +27,12 @@ void printHashTable(){
 	int i;
 	for (i=0;i<hashtablesize;i++){
 		hashtable* temp = HashTable[i];
-		printf("%d-->",i);
+		//printf("%d-->",i);
 		while(temp!=NULL){
-			printf("%s,",temp->name);
+			//printf("%s,",temp->name);
 			temp=temp->next;
 		}
-		printf("\n");
+		//printf("\n");
 	}
 }
 
@@ -65,9 +65,9 @@ Rule* makerule(int lineno){
 /*
 List of terminals
 */
-char* terminals[NO_OF_TERMINALS] = {"KEYWORD_INT", "KEYWORD_STRING" , "KEYWORD_IF" , "KEYWORD_ELSE" ,"KEYWORD_FLOAT", "ADD", "SUB", "MUL", "DIV" ,"MOD" , "LT" , "LE" , "GT" , "GE", "EQ" , "NE","RETURN",
-    "SEMICOLON","PARENTHESES_CLOSED","PARENTHESES_OPEN" , "CURLY_CLOSED" , "CURLY_OPEN" , "SQUARE_CLOSED" , "SQUARE_OPEN", "COMMA", "ASSIGNOP", "AND" , "OR" , "NOT" , "INT_NUM" , "FLOAT" , "STR", "IDENTIFIER","EOF",
-	"EPSILON" };
+char* terminals[NO_OF_TERMINALS] = {"SEMICOLON","KEYWORD_INT", "KEYWORD_STRING" , "KEYWORD_FLOAT", "IDENTIFIER", "COMMA","KEYWORD_IF" , "PARENTHESES_CLOSED","PARENTHESES_OPEN" , "KEYWORD_ELSE" ,
+	 "NOT" ,"AND" , "OR" ,"INT_NUM" , "FLOAT" ,"LT" , "LE" , "EQ", "GT" , "GE", "NE","ADD", "SUB", "MUL", "DIV" ,"MOD" , /*"RETURN",
+	"CURLY_CLOSED" , "CURLY_OPEN" , "SQUARE_CLOSED" , "SQUARE_OPEN",  "ASSIGNOP", */ "STR","EOF","EPSILON" };
 
 /*
 Initialise HashTable
@@ -214,14 +214,14 @@ Find if name is present in HashTable
 */
 hashtable* present(char* name){
 	int hashvalue = hash2(name);
-	printf("\nHash Value in present = %d\n", hashvalue);
+	//printf("Hash Value in present = %d\n", hashvalue);
 	if(HashTable[hashvalue]==NULL){
-		printf("Hash doesnt exist\n");
+		//printf("Hash doesnt exist\n");
 		return NULL;
 	}
 	else{
 		hashtable* temp = HashTable[hashvalue];
-		printf("String Value in prsent %s\n", temp->name);
+		//printf("String Value in prsent %s\n", temp->name);
 		while(temp->next!=NULL && strcmp(temp->name,name)!=0){
 			temp=temp->next;
 		}
@@ -275,7 +275,7 @@ void findFirst(char* name){ //,int parent,int* eps) //parent give rule no NT
 				//int newnt = present(temp->name,hashNode2);
 				hashNode2 = present(temp->name);
 				//printf("%s",terminals[0]);
-				printf("%s",temp->name);
+				//printf("%s",temp->name);
 				//printf("%d retuned from present\n",hashNode->ruleNo);
 				if(hashNode2==NULL){
 						int i=0;
@@ -341,6 +341,7 @@ void findfollow(char* name){
 	hashtable* hashNode;
 	hashNode = present(name);
 	if(hashNode==NULL){
+		printf("Entered first NULL\n");
 		printf("Unrecognized node while creating FollowSet");
 	}
 	else if(grammar[hashNode->ruleNo]->followcalculated==1){
@@ -365,13 +366,13 @@ void findfollow(char* name){
 						}
 					}
 					else if(temp->next!=NULL && temp->next->type!=2) {
-						//printf("%s-->" ,temp->name);
+						printf("%s-->" ,temp->name);
 						 hashtable* hashNode2;
 						 hashNode2 = present(temp->next->name);
 						 if (hashNode2==NULL){
 						 	int flag = 0;
 						 	int j=0;
-						 	//printf("Found term in mext-%s\n",temp->next->name);
+						 	printf("Found term in mext-%s\n",temp->next->name);
 						 	for (j=0;j<NO_OF_TERMINALS;j++){
 						 		if (strcmp(temp->next->name,terminals[j])==0){
 						 		//	printf("Next matched with %s",terminals[j]);
@@ -380,7 +381,7 @@ void findfollow(char* name){
 						 			break;
 								 }
 						 	}
-						 	if (flag==0) printf("Unrecognized token while creating FollowSet");
+						 	if (flag==0) printf("Error at line : 384, Unrecognized token while creating FollowSet\n");
 						 }
 						 else{
 						 //	printf("GOing for First -%s\n",temp->next->name);
@@ -417,17 +418,21 @@ Find first set of all the non terminals of the grammar
 */
 void findFirstSet(){
 	int i,j;
+	printf("-----------------------------\n");
+	printf("Printing First set \n");
+	printf("-----------------------------\n");
 	for(i=0;i<NO_OF_RULES;i++){
-		printf("\n	Finding first set for %s\n",grammar[i]->head->name);
+		//printf("\n	Finding first set for %s\n",grammar[i]->head->name);
 		findFirst(grammar[i]->head->name);
-		printf("\nFirst Set of %s\n",grammar[i]->head->name);
+		printf("%s  : ",grammar[i]->head->name);
 		for(j=0;j<NO_OF_TERMINALS;j++){
-		 	if (firstMatrix[i][j]==1){
+			if (firstMatrix[i][j]==1){
 		 		printf("%s, ", terminals[j]);
 			 }
 		}
-		 printf("\n");
+		printf("\n");
 	}
+	printf("-----------------------------\n");
 }
 
 /*
@@ -436,15 +441,15 @@ Find follow set of all the non terminals of the grammar
 void findFollowSet(){ //Don't print EPSILON
 	int i,j;
 	for(i=0;i<NO_OF_RULES;i++){
-		printf("\n	Finding follow set for %s\n",grammar[i]->head->name);
+		//printf("\n	Finding follow set for %s\n",grammar[i]->head->name);
 		findfollow(grammar[i]->head->name);
-		printf("\nFollow Set of %s\n",grammar[i]->head->name);
-		for(j=0;j<NO_OF_TERMINALS;j++){
-			if (followMatrix[i][j]==1){
-				printf("%s, ", terminals[j]);
-			}
-		}
-		printf("\n");
+		// printf("\nFollow Set of %s\n",grammar[i]->head->name);
+		// for(j=0;j<NO_OF_TERMINALS;j++){
+		// 	if (followMatrix[i][j]==1){
+		// 		printf("%s, ", terminals[j]);
+		// 	}
+		// }
+		// printf("\n");
 	}
 }
 
@@ -820,28 +825,27 @@ parsetree parseInputSourceCode(char *testcaseFile, GrammarNode** parsetable, int
 			tk = getNextToken(fp,0);
 			continue;
 		}
-		//printf("%s type\n",ParseTree->ruleNode->name);
 		gn = top(&st);
-		//printf("on top %s\n",gn->name);
 		if(gn->type==1){ // 
 			printf("entered in bigger if line 825\n");
 			printf("NT on top %s\n",gn->name);
 			hashNode = present(gn->name);
-			printf("Entered in line 830\n");
+			printf("Entered in line 827\n");
 			for(i=0;i<NO_OF_TERMINALS;i++){
 				if(strcmp(tk.name,terminals[i])==0) break;
 			}
-			if(hashNode == NULL){
-				printf("NULL returned\n");
-				tk = getNextToken(fp,0);
-				continue;
-			}
-			printf("%d\n",hashNode->ruleNo);
-			printf("Line 831P i = %d\n", i);
+			// GrammarNode newnode = (GrammarNode) malloc(sizeof(GrammarNode));
+			// newnode= parsetable[hashNode->ruleNo][i];
+			// if(newnode == NULL){
+			// printf("NULL returned\n");
+			// 	tk = getNextToken(fp,0);
+			//  	continue;
+			// }
+			// printf("%d\n",hashNode->ruleNo);
+			// printf("Line 831P i = %d\n", i);
 			
-			GrammarNode newnode = (GrammarNode) malloc(sizeof(GrammarNode));
-			//printf("%d\n",parsetable[hashNode->ruleNo][i]->type);
-			newnode= parsetable[hashNode->ruleNo][i];
+			GrammarNode newnode = newnode= parsetable[hashNode->ruleNo][i];
+			//printf("%d\n",parsetable[hashNode->ruleNo][0]->type);
 			printf("Entered line 832\n");
 			if(newnode==NULL){
 				printf("Entered in line 833\n");
