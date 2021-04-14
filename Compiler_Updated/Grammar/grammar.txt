@@ -1,6 +1,5 @@
 <stmt> -> <declarativeStmt> <stmt> | <assignmentStmt> <stmt> | <conditionalStmt> <stmt> | <recurStmt> <stmt> | EPSILON .
-<assignmentStmt> -> <lhs> ASSIGNOP <rhs> SEMICOLON .
-<lhs> -> IDENTIFIER .
+<assignmentStmt> -> IDENTIFIER ASSIGNOP <rhs> SEMICOLON .
 <operator> -> ADD | SUB | DIV | MUL | MOD . 
 <constrainedVars> -> IDENTIFIER | INT_NUM | FLOAT .
 <rhs> -> <arithmetic_expression> | INT_NUM | FLOAT .
@@ -12,7 +11,6 @@
 <conditionalStmt> -> KEYWORD_IF PARENTHESES_OPEN <booleanExpression> PARENTHESES_CLOSED PARENTHESES_OPEN <stmt> PARENTHESES_CLOSED <conditionalContd> . 
 <conditionalContd> -> KEYWORD_ELSE PARENTHESES_OPEN <stmt> PARENTHESES_CLOSED | EPSILON .
 <booleanExpression> -> <constrainedVars> <relationalOp> <constrainedVars> .
-<var> -> IDENTIFIER | INT_NUM | FLOAT | STR .
 <relationalOp> -> LT | LE | EQ | GT | GE | NE .
 <logicalOperators> -> AND | OR .
 <recurStmt> -> KEYWORD_WHILE PARENTHESES_OPEN <booleanExpression> PARENTHESES_CLOSED PARENTHESES_OPEN <stmt> PARENTHESES_CLOSED .
