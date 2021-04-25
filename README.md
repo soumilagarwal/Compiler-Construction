@@ -5,12 +5,16 @@ A lexical parser to generate token for a defined language construct
 
 Run using
 ```sh
+./run.sh (Using Bash Script)
+
+OR
+
 cd Compiler Project
-gcc lexer.c main.c -o a
-a testcase1.txt
+gcc lexer.c main.c parser.c -o program
+./program <Testcase_to_be_given>
 ```
 
-## Team Members
+## Authors
 - Soumil Agrawal
 - Giridhar Bajpai
 - Raunak Mantri
