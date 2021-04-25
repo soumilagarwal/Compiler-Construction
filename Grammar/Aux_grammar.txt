@@ -1,0 +1,88 @@
+MF ::= m [ ]  SMAF  end
+SMAF ::=  SMOF MSOF
+MSOF ::= SMOF  MSOF
+MSOF ::= ''
+SMOF ::= ST
+SMOF ::= F
+ST ::= DS
+ST ::= AS1
+ST ::= AS2
+ST ::= IFST
+ST ::= IOST
+ST ::= FCST ;
+F ::= funct [ PL ] = funid [ PL ] SMAF end ;
+PL ::= TYPE id RL
+TYPE ::= KEYWORD_INT
+TYPE ::= KEYWORD_FLOAT
+TYPE ::= KEYWORD_STRING
+TYPE ::= MATRIX
+RL ::= , TYPE id RL
+RL ::= ''
+DS ::= TYPE VL ;
+VL ::= id MID
+MID ::= , id MID
+MID ::= ''
+AS1 ::= LHSSV = RHST1 ;
+AS2 ::= LHSLV = RHST2 ;
+LHSSV ::= id
+LHSLV ::= [ VL ] 
+RHST1 ::= AE
+RHST1 ::= SE
+RHST1 ::= FCST
+RHST2 ::= SE
+RHST2 ::= FCST
+SE ::= size id
+IFST ::= KEYWORD_IF ( BE ) ST OST ELSEST
+ELSEST ::= KEYWORD_ELSE ST OST ENDIF ;
+ELSEST ::= ENDIF ;
+OST ::= ST OST
+OST ::= ''
+IOST ::= read ( id ) ;
+IOST ::= print ( id ) ;
+FCST ::= funid ( IPL )
+IPL ::= V LV
+IPL ::= ''
+LV ::= , V LV
+LV ::= ''
+AE ::= AT MTO
+MTO ::= OLP AT MTO
+MTO ::= ''
+AT ::= AF MTT
+MTT ::= OHP AF MTO
+MTT ::= ''
+AF ::= ( AE )
+AF ::= V
+OLP ::= +
+OLP ::= -
+OHP ::= *
+OHP ::= /
+BE ::= ( BE ) LOP ( BE )
+BE ::= not ( BE ) 
+BE ::= CV ROP CV
+CV ::= id
+CV ::= INT_NUM
+CV ::= FLOAT_NUM
+V ::= id MATELE
+V ::= INT_NUM
+V ::= FLOAT_NUM
+V ::= STR
+V ::= MATRIX
+MATRIX ::= [ ROWS ]
+ROWS ::= ROW MROWS
+MROWS ::= ; ROW MROWS
+MROWS ::= ''
+ROW ::= INT_NUM RCOLELE
+RCOLELE ::= , INT_NUM RCOLELE
+RCOLELE ::= ''
+MATELE ::= [ INT_NUM , INT_NUM ]
+MATELE ::= ''
+LOP ::= AND
+LOP ::= OR
+ROP ::= <
+ROP ::= <=
+ROP ::= ==
+ROP ::= >
+ROP ::= >=
+ROP ::= !=
+
+

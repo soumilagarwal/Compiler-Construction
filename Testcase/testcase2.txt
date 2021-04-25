@@ -1,0 +1,7 @@
+_main[]
+	int a
+	a = 5;
+	a = a + b;
+	
+	int x = ;
+end

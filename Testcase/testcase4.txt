@@ -1,0 +1,7 @@
+_main[]
+	int num1,num2;
+	read(num1);
+	read(num2);
+	int val;
+	val = num1*num2;
+end
