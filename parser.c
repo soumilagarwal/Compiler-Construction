@@ -1,10 +1,17 @@
+/**
+*   @author: Soumil Agrawal
+*            Giridhar Bajpai
+*            Raunak Mantri
+*            Anuj Kharbanda
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>
 #include <string.h>
 #include <stdbool.h>
-#include "Header/parser.h"
-#include "Header/lexer.h"
+#include "parser.h"
+#include "lexer.h"
 //char buffer[BUFFER_SIZE];
 int nopt = 0;
 int pterror=0;
@@ -20,21 +27,21 @@ int hash2(char* str)
 	return (int)(hash % hashtablesize);
 }
 
-/*
-For printing HashTable
-*/
-void printHashTable(){
-	int i;
-	for (i=0;i<hashtablesize;i++){
-		hashtable* temp = HashTable[i];
-		printf("%d-->",i);
-		while(temp!=NULL){
-			printf("%s,",temp->name);
-			temp=temp->next;
-		}
-		printf("\n");
-	}
-}
+// /*
+// For printing HashTable
+// */
+// void printHashTable(){
+// 	int i;
+// 	for (i=0;i<hashtablesize;i++){
+// 		hashtable* temp = HashTable[i];
+// 		printf("%d-->",i);
+// 		while(temp!=NULL){
+// 			printf("%s,",temp->name);
+// 			temp=temp->next;
+// 		}
+// 		printf("\n");
+// 	}
+// }
 
 /*
 Make a grammar node with specified parameters
@@ -42,9 +49,6 @@ Make a grammar node with specified parameters
 GrammarNode makenode(int type,int value,char* name){
 	GrammarNode g = (GrammarNode)malloc(sizeof(struct grammarnode));
 	g->type = type;
-	//if(type==0) NO_OF_TERMINALS++;
-	//else if(type==1) NO_OF_NONTERMINALS++;
-	//g->value = value;
 	strcpy(g->name,name);
 	g->next = NULL;
 	g->prev = NULL;
@@ -108,13 +112,13 @@ char* terminals[NO_OF_TERMINALS] = {"MAIN",
 
 /*
 Initialise HashTable
-*/
-void initHashtable(){
-	int i=0;
-	for (i=0;i<hashtablesize;i++){
-		HashTable[i] = NULL;
-	}
-}
+// */
+// void initHashtable(){
+// 	int i=0;
+// 	for (i=0;i<hashtablesize;i++){
+// 		HashTable[i] = NULL;
+// 	}
+// }
 
 /*
 Insert a Node in hashtable using non terminal index (ruleNode)
@@ -156,12 +160,11 @@ void createGrammar(char *grammarfile){
 	int hashvalue = 0;
 	//A->Ba
 	for (i=0;i<NO_OF_RULES;i++){
-		fscanf(fp,"%s",buffer); //N.T. A
-		//printf("%s",buffer);
+		fscanf(fp,"%s",buffer); //take in Non terminal part of rule
 		Rule* rule = makerule(i+1);
 		hashvalue = hash2(buffer);
 		GrammarNode newnode = makenode(1,hashvalue,buffer);
-		insert(hashvalue,1,buffer,i);
+		insert(hashvalue,1,buffer,i); //rule node is inserted
 		rule->head = newnode;
 		rule->tail = newnode;
 		GrammarNode temp = rule->head;
@@ -169,17 +172,16 @@ void createGrammar(char *grammarfile){
 		//printf("%s",buffer);
 		fscanf(fp, "%s",buffer); //B
 		//printf("%s",buffer);
-		while(buffer[0]!='.'){
+		while(buffer[0]!='.'){//rule ending condition
 			if(buffer[0]=='|'){
 				GrammarNode newnode = makenode(2,-2,buffer);
 				newnode->prev = temp;
 				temp->next = newnode;
 				temp = temp->next;
 			}
-			else if(buffer[0]!='<'){
-				GrammarNode newnode = makenode(0,-1,buffer);
+			else if(buffer[0]!='<'){//NT are denoted in <> 
+				GrammarNode newnode = makenode(0,-1,buffer);// since it does not start with < it is a terminal. Type = 0
 				hashvalue = hash2(buffer);
-				//insert(hashvalue,0,buffer,NULL); //NULL coz T
 				newnode->prev = temp;
 				temp->next = newnode;
 				temp = temp->next;
@@ -190,10 +192,9 @@ void createGrammar(char *grammarfile){
 				temp->next = newnode;
 				temp = temp->next;
 			}
-			else if(buffer[0]=='<'){
+			else if(buffer[0]=='<'){//rhs has a non terminal
 				hashvalue = hash2(buffer);
-				GrammarNode newnode = makenode(1,hashvalue,buffer);
-				//insert(hashvalue,1,buffer,);
+				GrammarNode newnode = makenode(1,hashvalue,buffer); // type = 1 for NT
 				newnode->prev = temp;
 				temp->next = newnode;
 				temp = temp->next;
@@ -207,6 +208,7 @@ void createGrammar(char *grammarfile){
 		}
 		rule->tail = temp;
 		grammar[i] = rule;
+		//printf("%s\n",grammar[i]);
 	}
 	fclose(fp);
 	return;
@@ -221,10 +223,10 @@ void printGrammar(){
 		Rule* rule = grammar[i];
 		GrammarNode temp = rule->head;
 		while(temp!=NULL){
-			printf("%s ",temp->name);
+			//printf("%s ",temp->name);
 			temp=temp->next;
 		}
-		printf("\n");
+		//printf("\n");
 	}
 }
 
@@ -236,7 +238,7 @@ void initialisefirstandfollowMatrix(){
 	followMatrix = (int **)malloc(sizeof(int*)*NO_OF_NONTERMINALS);
 	int i,j;
 	for(i=0;i<NO_OF_NONTERMINALS;i++){
-		firstMatrix[i] = (int*)malloc(sizeof(int)*NO_OF_TERMINALS);
+		firstMatrix[i] = (int*)malloc(sizeof(int)*NO_OF_TERMINALS); // create first and follow matrix of size no of terminals
 		followMatrix[i] = (int*)malloc(sizeof(int)*NO_OF_TERMINALS);
 		for(j=0;j<NO_OF_TERMINALS;j++){
 			firstMatrix[i][j]=0;
@@ -269,9 +271,9 @@ hashtable* present(char* name){
 }
 
 /*
-Find First of Name(Both Non terminal of terminal)
+Find First of Name
 */
-void findFirst(char* name){ //,int parent,int* eps) //parent give rule no NT
+void findFirst(char* name){
 	
 	// if already found in hash
 	// can keep local int* and send it to add as apar
@@ -280,7 +282,7 @@ void findFirst(char* name){ //,int parent,int* eps) //parent give rule no NT
 	//int parentnt = hashtable[parent];
 	//printf("%d retuned from present in %s\n",hashNode->ruleNo,hashNode->name);
 	if(hashNode==NULL){
-		printf("Unrecognized node while creating FollowSet");
+		printf("Unrecognized node while creating First Set");
 	}
 	else if(grammar[hashNode->ruleNo]->firstcalculated==1){
 		return;
@@ -293,14 +295,13 @@ void findFirst(char* name){ //,int parent,int* eps) //parent give rule no NT
 		while(temp!=NULL){
 			//printf("In While\n");
 			if(temp->type==2){
-				temp=temp->next;
+				temp=temp->next; // if | then check next
 			}
 			else if(temp->type==3){
-				firstMatrix[hashNode->ruleNo][NO_OF_TERMINALS-1] = 1;
+				firstMatrix[hashNode->ruleNo][NO_OF_TERMINALS-1] = 1; // if next is epsilon then first becomes all terminals in that rule
 			}
 			else{
 				//printf("In While else\n");
-				//int eps1=0;
 				hashtable* hashNode2;
 				//printf("%s\n",temp->name);
 				//int newnt = present(temp->name,hashNode2);
@@ -310,7 +311,7 @@ void findFirst(char* name){ //,int parent,int* eps) //parent give rule no NT
 						int i=0;
 						int flag=0;
 						for(i=0;i<NO_OF_TERMINALS;i++){
-							if (strcmp(terminals[i],temp->name)==0){
+							if (strcmp(terminals[i],temp->name)==0){ // checking if terminal
 								flag=1;
 								//printf("%d matched\n",i);
 								//printf("%d initial value\n",firstMatrix[hashNode->ruleNo][i]);
@@ -331,7 +332,7 @@ void findFirst(char* name){ //,int parent,int* eps) //parent give rule no NT
 							break;
 						}
 					}
-				else {
+				else {//found a non terminal
 					findFirst(hashNode2->name);
 					for (i=0;i<NO_OF_TERMINALS;i++){
 						if(firstMatrix[hashNode2->ruleNo][i]==1){
@@ -344,7 +345,6 @@ void findFirst(char* name){ //,int parent,int* eps) //parent give rule no NT
 							temp=temp->next;
 						}
 						if (temp==NULL) {
-							//printf("\nTemp is Null2\n");
 							break;
 						}
 					}
@@ -532,19 +532,19 @@ int* firstofRHS(GrammarNode rhs){
 		}
 		hashtable* hashNode;
 		hashNode = present(rhs->name);
-		if(hashNode==NULL){
+		if(hashNode==NULL){//it is a terminal
 			for(i=0;i<NO_OF_TERMINALS;i++){
 				if(strcmp(rhs->name,terminals[i])==0){
 					result[i]=1;
 					break;
 				}
 			}		
-			result[NO_OF_TERMINALS-1] = 0;
+			result[NO_OF_TERMINALS-1] = 0;//make it zero for epsilon
 			break;
 		}
-		else{
+		else{//it is a non terminal on rhs
 			for(i=0;i<NO_OF_TERMINALS;i++){
-				if(firstMatrix[hashNode->ruleNo][i]==1){
+				if(firstMatrix[hashNode->ruleNo][i]==1){//find first of that non terminal from first matrix and make result[i] = 1
 					result[i]=1;
 				}
 			}
@@ -566,7 +566,11 @@ void createParseTable(){
 	int* p;
 	for (i=0;i<NO_OF_RULES;i++){
 		GrammarNode temp = grammar[i]->head->next;
+		//printf("%s",temp->name);
+		//printf("\n");
 		GrammarNode start = grammar[i]->head->next;
+		//printf("%s",start->name);
+		//printf("\n");
 		while(temp!=NULL){
 			if(strcmp(temp->name,"EPSILON")==0){
 				//printf("Epsilon found!!");
@@ -579,13 +583,14 @@ void createParseTable(){
 	            }
 			}
 			p = firstofRHS(temp);
+
 			for(j=0;j<NO_OF_TERMINALS-1;j++){ //ignoring epsilon
-				if(p[j]==1){  // can be without ==
-					if (parsetable[i][j]!=NULL) printf("grammar not LL1") ;
+				if(p[j]==1){ 
+					if (parsetable[i][j]!=NULL) printf("grammar not LL1") ; // if a table cell has multiple entries it is not LL(1). Hence checking if it is empty first
 					parsetable[i][j] = start;
 				}
 			}
-			if (p[NO_OF_TERMINALS-1]==1) {// can be without ==
+			if (p[NO_OF_TERMINALS-1]==1) {//checking to see if epsilon is 1 
 				for(j=0 ; j<NO_OF_TERMINALS-1; j++) { //remove eps from followset
 	                if(followMatrix[i][j]==1)
 	                	if (parsetable[i][j]!=NULL) printf("grammar not LL1") ;
@@ -593,12 +598,11 @@ void createParseTable(){
 	            }
 			}
 			if(temp==NULL) break;
-			else if(temp->type==2) {  // temp->type==2
+			else if(temp->type==2) {  // temp->type==2 | condition
 				temp = temp->next;
 				start = temp;
-				//start = 
 			}
-			else{ //agar bech mein se return
+			else{
 				while(temp!=NULL && temp->type!=2){
 					temp=temp->next;
 				}
@@ -611,7 +615,7 @@ void createParseTable(){
 				}
 			}
 		}
-		parsetable[i][39]=NULL;	
+		parsetable[i][39]=NULL;	// 39 is epsilon
 	}
 	
 }
@@ -639,15 +643,14 @@ Stack createStack(){
 	Stack st = (Stack)malloc(sizeof(Stack));
 	st->bottom = (GrammarNode)malloc(sizeof(grammarnode));
 	st->top = (GrammarNode)malloc(sizeof(grammarnode));
-	strcpy(st->bottom->name,"EOF");
-	strcpy(st->top->name,"<mainFunction>");
-	st->top->next=NULL;
+	strcpy(st->bottom->name,"EOF"); // ends with eof
+	strcpy(st->top->name,"<mainFunction>"); // code will start with main function
+	st->top->next=NULL; 
 	st->top->prev=st->bottom;
 	st->top->type=1; //coz NT
-	//st->size=;
 	st->bottom->next=st->top;
 	st->bottom->prev=NULL;
-	st->bottom->type=0; //coz term
+	st->bottom->type=0; // terminal
 	return st;
 }
 
@@ -859,6 +862,7 @@ parsetree parseInputSourceCode(char *testcaseFile, GrammarNode** parsetable, int
 	pop(&st);
 	push(&st,grammar[0]->head->next); //main rule
 	ParseTree = addChildren(ParseTree,grammar[0]->head->next);
+	//printf("%s",grammar[0]->head->next->name);
 	initialiseSynchMatrix();
 	tokenInfo tk = getNextToken(fp,0);
 	tokenInfo tk2;
@@ -884,6 +888,7 @@ parsetree parseInputSourceCode(char *testcaseFile, GrammarNode** parsetable, int
 				if(strcmp(tk.name,terminals[i])==0) break;
 			}
 			GrammarNode newnode= parsetable[hashNode->ruleNo][i];
+			//printf("%s\n",newnode->name);
 			if(newnode==NULL){
 				char expectedTk[100];
 				expectedToken(gn->name,expectedTk);
@@ -901,7 +906,7 @@ parsetree parseInputSourceCode(char *testcaseFile, GrammarNode** parsetable, int
 					ParseTree = next(ParseTree);
 				}
 				else{
-					printf("Error recovery: Skiping" );
+					printf("Error recovery: Skipping" );
 					char* name;
 					while(tk.type!=EOF1 && synchMatrix[hashNode->ruleNo][i]==0 ){ //&& isKeyword(tk,name)==-1
 						printf(",%s",tk.name);
@@ -926,9 +931,6 @@ parsetree parseInputSourceCode(char *testcaseFile, GrammarNode** parsetable, int
 				push(&st,newnode);
 				ParseTree = addChildren(ParseTree,newnode);
 			}
-				
-			//}
-			
 		}
 		else{ // check whether to chekc for EPSILON and |
 			//printf("T on top %s\n",gn->name);

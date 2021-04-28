@@ -1,0 +1,6 @@
+_main[]
+	string s;
+	int a;
+	s = "abcd";
+	# above should be syntactically correct
+end

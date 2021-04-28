@@ -1,10 +1,18 @@
+/**
+*   @author: Soumil Agrawal
+*            Giridhar Bajpai
+*            Raunak Mantri
+*            Anuj Kharbanda
+*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>
 #include <string.h>
 #include <stdbool.h>
 
-#include "Header/lexer.h"
+#include "lexer.h"
 
 int lineno = 1;
 int currentpos=0;

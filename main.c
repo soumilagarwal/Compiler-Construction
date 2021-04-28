@@ -1,5 +1,14 @@
-#include "Header/lexer.h"
-#include "Header/parser.h"
+/**
+*   @author: Soumil Agrawal
+*            Giridhar Bajpai
+*            Raunak Mantri
+*            Anuj Kharbanda
+*/
+
+
+
+#include "lexer.h"
+#include "parser.h"
 
 int main(int argc, char *argv[])
 {
@@ -9,9 +18,8 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 	int n;
-	initialiseKeywordHash();
-	initHashtable();
-	createGrammar("Grammar/grammar.txt");
+	initialiseKeywordHash();//used in lexer.c
+	createGrammar("grammar.txt");//start of parser functions
 	initialisefirstandfollowMatrix();
 	findFirstSet();
 	findFollowSet();
